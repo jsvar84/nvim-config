@@ -105,3 +105,31 @@ return {
 | `<C-n>` | Toggle NvimTree |
 | `;` | Enter command mode |
 | `jk` | Exit insert mode |
+
+## Verifying the Installation
+
+To test a clean install without touching your live config, use isolated XDG
+directories:
+
+```sh
+# Create a temporary environment
+mkdir -p /tmp/nvim-test/{config,data,state,cache}
+
+# Clone fresh
+git clone https://github.com/jsvar84/nvim-config /tmp/nvim-test/config/nvim
+
+# Bootstrap and install all plugins headlessly
+XDG_CONFIG_HOME=/tmp/nvim-test/config \
+XDG_DATA_HOME=/tmp/nvim-test/data \
+XDG_STATE_HOME=/tmp/nvim-test/state \
+XDG_CACHE_HOME=/tmp/nvim-test/cache \
+nvim --headless "+Lazy! sync" +qa
+
+# Confirm 26 plugins were installed
+ls /tmp/nvim-test/data/nvim/lazy/ | wc -l
+
+# Clean up
+rm -rf /tmp/nvim-test
+```
+
+Expected output: all plugins clone without errors and the final command exits 0.
