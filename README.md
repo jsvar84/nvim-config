@@ -56,19 +56,32 @@ Wait for the installation to complete, then restart Neovim.
     └── nvchad/           # NvChad core (plugins, configs, mappings)
 ```
 
-## Customization
+## Configuration
 
-### Changing the theme
+### Theme
 
-Edit `lua/chadrc.lua`:
+Currently set to **catppuccin**. NvChad uses its own `base46` theme system — the
+standard `:colorscheme` command will always report "default", which is normal.
+
+To change the theme, edit `lua/chadrc.lua`:
 
 ```lua
 M.base46 = {
-  theme = "catppuccin", -- any NvChad theme name
+  theme = "catppuccin", -- change to any NvChad theme name
 }
 ```
 
-Run `:Telescope themes` inside Neovim to preview all available themes.
+Run `:lua require("nvchad.themes").open()` (or `<leader>th`) to preview and
+switch themes live.
+
+### Dashboard
+
+The [nvdash](https://nvchad.com/docs/features#nvdash) dashboard is enabled and
+loads on startup. To disable it, comment out the line in `lua/chadrc.lua`:
+
+```lua
+-- M.nvdash = { load_on_startup = true }
+```
 
 ### Adding plugins
 
@@ -94,17 +107,55 @@ return {
 
 ## Key Mappings
 
-`<leader>` is set to `Space`.
+`<leader>` is `Space`.
+
+### Navigation
 
 | Key | Action |
 |-----|--------|
-| `<leader>ff` | Find files (Telescope) |
+| `<Tab>` | Next buffer |
+| `<S-Tab>` | Previous buffer |
+| `<leader>x` | Close buffer |
+| `<C-h/j/k/l>` | Move between windows |
+| `<C-n>` | Toggle file tree |
+| `<leader>e` | Focus file tree |
+
+### File & Search
+
+| Key | Action |
+|-----|--------|
+| `<leader>ff` | Find files |
 | `<leader>fw` | Live grep |
-| `<leader>e` | Toggle file tree |
+| `<leader>fb` | Find open buffers |
+| `<leader>fo` | Recent files |
 | `<leader>th` | Switch theme |
-| `<C-n>` | Toggle NvimTree |
-| `;` | Enter command mode |
-| `jk` | Exit insert mode |
+
+### Editing
+
+| Key | Action | Mode |
+|-----|--------|------|
+| `<C-s>` | Save file | Normal, Insert, Visual |
+| `<leader>fm` | Format file | Normal |
+| `<leader>/` | Toggle comment | Normal, Visual |
+| `;` | Enter command mode | Normal |
+| `jk` | Exit insert mode | Insert |
+
+### Windows & Splits
+
+| Key | Action |
+|-----|--------|
+| `<leader>sv` | Vertical split |
+| `<leader>sh` | Horizontal split |
+| `<leader>v` | New vertical terminal |
+| `<leader>h` | New horizontal terminal |
+| `<A-i>` | Toggle floating terminal |
+
+### LSP
+
+| Key | Action |
+|-----|--------|
+| `<leader>ds` | Diagnostics list |
+| `<leader>wK` | Show all keymaps (WhichKey) |
 
 ## Verifying the Installation
 
